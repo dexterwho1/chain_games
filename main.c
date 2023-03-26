@@ -2,11 +2,23 @@
 
 #define ROWS 9
 #define COLS 9
+#define MAX_EMPTY_CELLS 1
 
 // Définition de la classe Board
 typedef struct {
     int grid[ROWS][COLS];
+    int casetrouver[MAX_EMPTY_CELLS][2];
+
 } Board;
+
+
+void setzero(Board *board, int x, int y,int n) {
+    board->casetrouver[n][0] = x;
+    board->casetrouver[n][1] = y;
+    board->grid[x][y] = 0;
+
+}
+
 
 // Initialisation du plateau avec la valeur 1
 void init_board(Board *board) {
@@ -44,6 +56,7 @@ void printboard(Board *board) {
 
 // Initialisation du niveau 1 du jeu
 void init_level1(Board *board) {
+
     int level[ROWS][COLS] = {
             {1, 1, 3, 1, 1, 1, 1, 1, 1},
             {1, 2, 1, 1, 1, 1, 1, 1, 1},
@@ -64,13 +77,16 @@ void init_level1(Board *board) {
 
     // La position (8, 5) est libre
     board->grid[8][5] = 0;
+    setzero(board, 8,5,0);
+
 }
 
 // Déplacement du joueur sur le plateau
-void move(Board *board, char direction) {
+void move(&board, char direction, int n) {
     switch(direction) {
         case 'z':
             printf("haut\n");
+            setzero(board, board->casetrouver[n+1][0], board->casetrouver[n+1][1], n+1);
             break;
         case 'q':
             printf("gauche\n");
@@ -87,6 +103,7 @@ void move(Board *board, char direction) {
 }
 
 int main() {
+    int n=1;
     char direction;
     printf("Bienvenue au jeu Cardinal!\n");
 
@@ -100,13 +117,17 @@ int main() {
 
     printf("\nManche 1\n");
     printboard(board.grid);
-
     printf("Les deplacements :\n pour aller en haut -> z \n pour aller en bas -> s \n pour aller a gauche -> q \n pour aller a droite -> d\n");
     printf("Votre choix ? : ");
 
+
+
     for (int i = 0; i < 5; i++) {
         scanf(" %c", &direction);
-        move(&board, direction);
+        move(board.grid, direction, n);
+        printboard(board.grid);
+
+
     }
 
     return 0;
