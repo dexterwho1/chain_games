@@ -2,12 +2,11 @@
 
 #define ROWS 9
 #define COLS 9
-#define MAX_EMPTY_CELLS 1
 
 // Définition de la classe Board
 typedef struct {
     int grid[ROWS][COLS];
-    int casetrouver[MAX_EMPTY_CELLS][2];
+    int casetrouver[95][3];
 
 } Board;
 
@@ -16,6 +15,9 @@ void setzero(Board *board, int x, int y,int n) {
     board->casetrouver[n][0] = x;
     board->casetrouver[n][1] = y;
     board->grid[x][y] = 0;
+
+
+    printf("tableau a l'indice %d est egal a [%d][%d]\n", n, board->casetrouver[n][0], board->casetrouver[n][1]);
 
 }
 
@@ -82,28 +84,35 @@ void init_level1(Board *board) {
 }
 
 // Déplacement du joueur sur le plateau
-void move(&board, char direction, int n) {
-    switch(direction) {
-        case 'z':
-            printf("haut\n");
-            setzero(board, board->casetrouver[n+1][0], board->casetrouver[n+1][1], n+1);
-            break;
-        case 'q':
-            printf("gauche\n");
-            break;
-        case 's':
-            printf("bas\n");
-            break;
-        case 'd':
-            printf("droite\n");
-            break;
-        default:
-            printf("erreur\n");
+// Déplacement du joueur sur le plateau
+// Déplacement du joueur sur le plateau
+int move(Board *board, int n) {
+    printf(" numero %d",n);
+    n++;
+
+    printf("Liste de tous les casetrouver : \n");
+    board->casetrouver[n][0]=4;
+    board->casetrouver[n][1]=6;
+    setzero(board,board->casetrouver[n][0]=4,board->casetrouver[n][1]=6,n);
+
+
+
+    for(int i = 0; i < 8; i++) {
+        printf("[%d][%d]\n", board->casetrouver[i][0], board->casetrouver[i][1]);
     }
+
+
+    printf("\n");
+
+    printf("Position actuelle : [%d][%d]\n", board->casetrouver[n][0], board->casetrouver[n][1]);
+
+
+
+    return n;
 }
 
 int main() {
-    int n=1;
+    int n=0;
     char direction;
     printf("Bienvenue au jeu Cardinal!\n");
 
@@ -120,15 +129,14 @@ int main() {
     printf("Les deplacements :\n pour aller en haut -> z \n pour aller en bas -> s \n pour aller a gauche -> q \n pour aller a droite -> d\n");
     printf("Votre choix ? : ");
 
+    n=move(board.grid,n);
+    printboard(board.grid);
+
+    n=move(board.grid,n);
+    printboard(board.grid);
 
 
-    for (int i = 0; i < 5; i++) {
-        scanf(" %c", &direction);
-        move(board.grid, direction, n);
-        printboard(board.grid);
 
-
-    }
 
     return 0;
 }
