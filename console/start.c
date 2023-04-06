@@ -4,10 +4,13 @@
 #include "../main.h"
 void playLevel(Board *board) {
     bool continuepartie = false;
+
     while (continuepartie == false) {
         printboardwithpos(board, memoire[indice][0], memoire[indice][1]);
         demandeDeplacement(board);
-        continuepartie = estPartieTerminee(board);
+        continuepartie=compterCasesSuperieuresAZero(board);
+
+
     }
 }
 
